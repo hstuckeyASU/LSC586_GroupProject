@@ -5,7 +5,7 @@ Final group project git repository for code used in differential expression anal
 
 This repository contains the computational pipeline for performing differential expression analysis on _Arabidopsis thaliana_ (Thale Cress) RNA-seq data. The implementation offers two distinct approaches for sequence alignment and gene quantification:
 
-1. **Python-based pipeline** - Utilizes STAR for alignment, optimized for performance with large datasets
+1. **Python-based pipeline** - Utilizes STAR for alignment, optimized for performance with large datasets, with optional visualization code
 2. **R-based workflow** - Alternative methodology for comparison and validation purposes
 
 Both pipelines are fully documented with clear instructions for execution. The downstream differential expression analysis is implemented exclusively in R using the DESeq2 package.
