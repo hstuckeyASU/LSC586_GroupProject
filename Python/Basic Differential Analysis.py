@@ -1,3 +1,5 @@
+### This is a basic non robust differential analysis method. It is recommended to perform this step in R ###
+
 def perform_differential_analysis(count_matrix, sample_names):
 
     analysis_data = count_matrix.copy()
