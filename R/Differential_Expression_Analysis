@@ -2,6 +2,7 @@
 # Perform Differential Expression Analysis #
 ############################################
 
+<<<<<<< HEAD
 #create the DESeq2 dataset
 dds <- DESeqDataSetFromMatrix(countData = count_matrix,
                               colData = sample_info,
@@ -22,3 +23,26 @@ head(res_sig)
 
 #export the results
 write.csv(as.data.frame(res_sig), "C:/Capstone 1 & 2/DEGs.csv") # Update path to where you would like results saved
+=======
+#create the DESeq2 dataset
+dds <- DESeqDataSetFromMatrix(countData = count_matrix,
+                              colData = sample_info,
+                              design = ~ condition)
+
+#run differential expression analysis
+dds <- DESeq(dds)
+
+# Obtain results
+res <- results(dds)
+
+#inspect significant genes
+# Filter significant DEGs (adjusted p-value < 0.05)
+res_sig <- res[which(res$padj < 0.05), ]
+
+# View top DEGs
+head(res_sig)
+
+#export the results
+write.csv(as.data.frame(res_sig), "C:/Capstone 1 & 2/DEGs.csv") # Update path to where you would like results saved
+
+>>>>>>> fe25ee5ffc6c120f957e95b6289be173df0b6371
