@@ -8,7 +8,7 @@ This repository contains the computational pipeline for performing differential 
 1. **Python-based pipeline** - Utilizes STAR for alignment, optimized for performance with large datasets, with optional visualization code
 2. **R-based workflow** - Alternative methodology for comparison and validation purposes
 
-Both pipelines are fully documented with clear instructions for execution. The downstream differential expression analysis is implemented exclusively in R using the DESeq2 package.
+Both pipelines are fully documented with clear instructions for execution. The downstream differential expression analysis is highly recommended to be performed in R using the DESeq2 package.
 
 ## Key Features
 
