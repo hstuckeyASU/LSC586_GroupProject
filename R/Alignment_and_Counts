@@ -2,53 +2,6 @@
 # Align samples to reference annotation file #
 ##############################################
 
-<<<<<<< HEAD
-# install needed Bioconductor packages
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("Rsubread")
-
-library(Rsubread)
-
-# build index for reference genome; used for aligning RNA-seq reads
-buildindex(basename = "Arabidopsis_index", reference = "pathForReference.fna")
-
-# align the treatment and control samples to the indexed reference genome
-align(index = "Arabidopsis_index", 
-      readfile1 = "Treatment_file.fastq",    # Path to the treatment fastq file
-      output_file = "Aligned_Treatment.bam", #.bam file contains aligned reads of treatment
-      nthreads = 4)             
-align(index = "Arabidopsis_index", 
-      readfile1 = "Control_file.fastq.gz",    # Path to the control fastq.gz file
-      output_file = "Aligned_Control.bam", #.bam file contains aligned reads of control
-      nthreads = 4)                
-
-########################
-# Make counts matrices #
-########################
-
-# Define the BAM files
-bam_files <- c("LeadTreatment.bam", 
-               "Control.bam")
-
-# Run featureCounts
-counts <- featureCounts(files = bam_files,
-                        annot.ext = "Arabidopsis_annotation.gtf",
-                        isGTFAnnotationFile = TRUE,
-                        GTF.featureType = "exon",
-                        GTF.attrType = "gene_id",
-                        useMetaFeatures = TRUE,
-                        allowMultiOverlap = TRUE,
-                        nthreads = 4) # Adjust threads as needed
-
-# Extract the count matrix
-count_matrix <- counts$counts
-
-# Inspect the matrix
-head(count_matrix)
-
-write.csv(count_matrix, "count_matrix.csv")
-=======
 # install needed Bioconductor packages
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
@@ -95,4 +48,3 @@ head(count_matrix)
 
 write.csv(count_matrix, "count_matrix.csv")
 
->>>>>>> fe25ee5ffc6c120f957e95b6289be173df0b6371
