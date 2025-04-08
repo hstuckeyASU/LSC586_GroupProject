@@ -112,3 +112,5 @@ After generating the gene count matrix, proceed to differential expression analy
 1. Load the `gene_counts.csv` or `gene_counts.txt` file in R
 2. Use DESeq2 to identify differentially expressed genes between treatments
 3. Visualize and interpret the results
+
+> Provided after is a basic differential analysis script and optional visualization in python. It is still recommended to use already established differential expression analysis tools in R after processing datasets in python.
