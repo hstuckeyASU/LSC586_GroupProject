@@ -1,0 +1,71 @@
+#######################
+# Create Volcano Plot #
+#######################
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("EnhancedVolcano")
+
+library(EnhancedVolcano)
+install.packages("dplyr")
+library(dplyr)
+library(ggplot2)
+
+# Check the top of the results 
+# Import results if needed
+head(res)
+
+# Volcano plot
+EnhancedVolcano(res,
+                lab = rownames(res),
+                x = 'log2FoldChange',
+                y = 'padj',
+                xlab = 'Log2 Fold Change (Effect Size)',
+                ylab = '-Log10 Adjusted P-value (Significance)',
+                title = 'Volcano Plot of Differential Gene Expression',
+                subtitle = 'Highlights of RNA-seq Analysis',
+                pointSize = 2.0,
+                labSize = 2.5,              # Balance font size for readability
+                col = c('gray', 'orange', 'skyblue', 'purple'),
+                selectLab = rownames(res)[1:10], # Top 10 genes
+                drawConnectors = TRUE,
+                widthConnectors = 0.4,     # Thinner connectors for less visual clutter
+                boxedLabels = TRUE,        # Keep white background
+                max.overlaps = Inf         # Allow repositioning for all labels
+)
+
+###################################################################
+# Create a plot of the top 20 upregulated and downregulated genes #
+###################################################################
+
+# Convert DESeqResults to a data frame
+significant_genes_df <- as.data.frame(significant_genes)
+
+# Add the rownames (gene IDs) as a column
+significant_genes_df$Gene <- rownames(significant_genes_df)
+
+# Check the structure
+str(significant_genes_df)
+
+# Select top 10 genes by baseMean
+top_genes <- significant_genes_df %>% arrange(desc(baseMean)) %>% head(10)
+
+# Add a category column for up/down regulation
+significant_genes_df$Regulation <- ifelse(significant_genes_df$log2FoldChange > 0, "Upregulated", "Downregulated")
+
+# Summarize counts by category
+gene_summary <- significant_genes_df %>% group_by(Regulation) %>% summarize(Count = n())
+
+# Get top 10 upregulated and downregulated genes
+top_genes <- significant_genes_df %>% group_by(Regulation) %>%slice_max(baseMean, n = 10)
+
+# Make the plot
+ ggplot(top_genes, aes(x = reorder(Gene, -baseMean), y = baseMean, fill = Regulation)) +
+    geom_bar(stat = "identity") +
+    theme_minimal() +
+    labs(
+    title = "Top 20 Upregulated & Downregulated Genes",
+    x = "Genes",
+    y = "BaseMean Expression") +
+    scale_fill_manual(values = c("Upregulated" = "skyblue", "Downregulated" =  "orange")) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10))
